@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:music_app/components/custom_bottom_navigation_bar.dart';
 
 class HomePage extends StatelessWidget {
@@ -15,7 +16,11 @@ class HomePage extends StatelessWidget {
                     pinned: true,
                     floating: false,
                     expandedHeight: 270.0,
-                    leading: Icon(Icons.home),
+                    leading: Container(
+                        // color: Colors.amber,
+                        padding: EdgeInsets.all(15),
+                        child:
+                            FaIcon(FontAwesomeIcons.code, color: Colors.amber)),
                     flexibleSpace: FlexibleSpaceBar(
                         background: Container(
                       padding: EdgeInsets.symmetric(horizontal: 20),
@@ -91,7 +96,7 @@ class HomePage extends StatelessWidget {
                     )),
                     actions: <Widget>[
                       IconButton(
-                        icon: const Icon(Icons.search),
+                        icon: const FaIcon(FontAwesomeIcons.magnifyingGlass),
                         tooltip: 'Search',
                         onPressed: () {/* ... */},
                       ),
@@ -116,7 +121,7 @@ class HomePage extends StatelessWidget {
                             shape: BoxShape.circle,
                             image: DecorationImage(
                                 image: NetworkImage(
-                                  "https://cdn.longkhanhpets.com/2019/08/tam-ly-loai-meo-1.jpg",
+                                  "https://icdn.dantri.com.vn/thumb_w/660/2021/06/09/chodocx-1623207689539.jpeg",
                                 ),
                                 fit: BoxFit.fitHeight,
                                 colorFilter: ColorFilter.mode(
