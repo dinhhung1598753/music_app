@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:music_app/components/custom_bottom_navigation_bar.dart';
+import 'package:music_app/providers/music_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    context.read<MusicProvider>().getCategory();
     return Scaffold(
         backgroundColor: Colors.black,
         body: Stack(

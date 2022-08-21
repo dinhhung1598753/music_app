@@ -40,12 +40,26 @@ class CustomBottomNavigationBar extends StatelessWidget {
                               showModalBottom(context);
                             },
                             child: ListTile(
-                              title: Text('abcs'),
-                              subtitle: Text('xycs'),
+                              title: Text(
+                                  context.watch<MusicProvider>().music!.name),
+                              subtitle: Text(
+                                  context.watch<MusicProvider>().music!.singer),
                             ),
                           ),
                         ),
-                        FaIcon(FontAwesomeIcons.play),
+                        InkWell(
+                            onTap: () => {
+                                  if (Provider.of<MusicProvider>(context,
+                                          listen: false)
+                                      .isPlaying)
+                                    {context.read<MusicProvider>().pause()}
+                                  else
+                                    {context.read<MusicProvider>().resume()}
+                                },
+                            child: FaIcon(
+                                context.watch<MusicProvider>().isPlaying
+                                    ? FontAwesomeIcons.pause
+                                    : FontAwesomeIcons.play)),
                         Padding(padding: EdgeInsets.all(10)),
                         InkWell(
                           child: FaIcon(FontAwesomeIcons.xmark),
