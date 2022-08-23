@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:music_app/components/custom_bottom_navigation_bar.dart';
+import 'package:music_app/providers/home_provider.dart';
 import 'package:music_app/providers/music_provider.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    context.read<MusicProvider>().getCategory();
+    context.read<HomeProvider>().getCategory();
     return Scaffold(
         backgroundColor: Colors.black,
         body: Stack(
@@ -69,7 +70,7 @@ class HomePage extends StatelessWidget {
                                       padding: EdgeInsets.all(5),
                                       child: Center(
                                           child: Text(
-                                        'Commercial',
+                                        'Category',
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
@@ -85,7 +86,7 @@ class HomePage extends StatelessWidget {
                                                   width: 1))),
                                       child: Center(
                                           child: Text(
-                                        'Free license',
+                                        'Top 100',
                                         style: TextStyle(
                                             color: Colors.grey,
                                             fontWeight: FontWeight.bold,
@@ -101,46 +102,60 @@ class HomePage extends StatelessWidget {
                       IconButton(
                         icon: const FaIcon(FontAwesomeIcons.magnifyingGlass),
                         tooltip: 'Search',
-                        onPressed: () {/* ... */},
+                        onPressed: () {
+                          context.read<HomeProvider>().getCategory();
+                        },
                       ),
                     ]),
-                SliverGrid(
-                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 200.0,
-                    mainAxisSpacing: 10.0,
-                    crossAxisSpacing: 10.0,
-                    childAspectRatio: 1.0,
-                  ),
-                  delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                      final size = MediaQuery.of(context).size.width / 4;
-                      return Container(
-                          width: size,
-                          height: size,
-                          padding: EdgeInsets.all(10),
-                          margin: EdgeInsets.all(10),
-                          decoration: new BoxDecoration(
-                            color: Colors.red[400],
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
+                SliverPadding(
+                  padding: EdgeInsets.all(10),
+                  sliver: SliverGrid(
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 200.0,
+                      mainAxisSpacing: 5.0,
+                      crossAxisSpacing: 5.0,
+                      childAspectRatio: 1.0,
+                    ),
+                    delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        final size = MediaQuery.of(context).size.width / 4;
+                        final categories =
+                            context.watch<HomeProvider>().categories;
+                        return Container(
+                            width: size,
+                            height: size,
+                            padding: EdgeInsets.all(10),
+                            margin: EdgeInsets.all(10),
+                            decoration: new BoxDecoration(
+                              // color: Colors.red[400],
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
                                 image: NetworkImage(
-                                  "https://icdn.dantri.com.vn/thumb_w/660/2021/06/09/chodocx-1623207689539.jpeg",
+                                  categories[index].thumbnail,
                                 ),
                                 fit: BoxFit.fitHeight,
-                                colorFilter: ColorFilter.mode(
-                                    Colors.black.withOpacity(0.4),
-                                    BlendMode.dstATop)),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'circle',
-                              style: TextStyle(color: Colors.black),
+                                // colorFilter: ColorFilter.mode(
+                                //     Colors.black.withOpacity(0.4),
+                                //     BlendMode.dstATop)
+                              ),
                             ),
-                          ));
-                    },
-                    childCount: 20,
+                            child: Center(
+                              child: Text(
+                                categories[index].title,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                              ),
+                            ));
+                      },
+                      childCount:
+                          context.watch<HomeProvider>().categories.length,
+                    ),
                   ),
-                )
+                ),
+                SliverPadding(padding: EdgeInsets.all(80))
               ],
             ),
             Align(

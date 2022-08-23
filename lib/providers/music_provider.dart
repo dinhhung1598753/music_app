@@ -73,8 +73,4 @@ class MusicProvider extends ChangeNotifier {
     _music = null;
     notifyListeners();
   }
-
-  void getCategory() async {
-    await fetchCategory();
-  }
 }
