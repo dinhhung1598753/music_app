@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../models/music.dart';
+import '../providers/app_provider.dart';
 import '../providers/home_provider.dart';
 import '../providers/music_provider.dart';
 import 'custom_modal_bottom_sheet.dart';
@@ -48,14 +49,17 @@ class CustomBottomNavigationBar extends StatelessWidget {
                           ),
                         ),
                         InkWell(
-                            onTap: () => {
-                                  if (Provider.of<MusicProvider>(context,
-                                          listen: false)
-                                      .isPlaying)
-                                    {context.read<MusicProvider>().pause()}
-                                  else
-                                    {context.read<MusicProvider>().resume()}
-                                },
+                            onTap: () {
+                              Provider.of<MusicProvider>(context, listen: false)
+                                  .playMusic();
+                              if (Provider.of<MusicProvider>(context,
+                                      listen: false)
+                                  .isPlaying) {
+                                context.read<MusicProvider>().pause();
+                              } else {
+                                context.read<MusicProvider>().resume();
+                              }
+                            },
                             child: FaIcon(
                                 context.watch<MusicProvider>().isPlaying
                                     ? FontAwesomeIcons.pause
@@ -118,12 +122,12 @@ class CustomBottomNavigationBarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color color = this.activeIndex! == context.watch<HomeProvider>().indexPage
+    Color color = this.activeIndex! == context.watch<AppProvider>().indexPage
         ? Colors.amber
         : Colors.white;
     return InkWell(
       onTap: () {
-        context.read<HomeProvider>().setIndexPage(this.activeIndex!);
+        context.read<AppProvider>().setIndexPage(this.activeIndex!);
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

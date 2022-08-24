@@ -8,4 +8,10 @@ class Music {
       required String this.singer,
       required String this.thumbnail,
       required String this.url});
+
+  Music.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        singer = json['singer'],
+        thumbnail = json['thumbnail'],
+        url = json['url'];
 }

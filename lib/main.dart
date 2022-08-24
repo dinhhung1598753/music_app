@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:music_app/providers/app_provider.dart';
 import 'package:music_app/providers/home_provider.dart';
 import 'package:music_app/providers/music_provider.dart';
 import 'package:music_app/screens/home.dart';
 import 'package:provider/provider.dart';
 
+import 'components/custom_bottom_navigation_bar.dart';
+
 void main() {
   runApp(MultiProvider(
     providers: [
+      ChangeNotifierProvider(create: (_) => AppProvider()),
       ChangeNotifierProvider(create: (_) => HomeProvider()),
       ChangeNotifierProvider(create: (_) => MusicProvider()),
     ],
@@ -24,7 +29,17 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: Scaffold(
+          backgroundColor: Colors.black,
+          body: Stack(
+            children: [
+              context.watch<AppProvider>().screen,
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: CustomBottomNavigationBar(),
+              )
+            ],
+          )),
     );
   }
 }
