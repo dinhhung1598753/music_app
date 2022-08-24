@@ -6,18 +6,17 @@ import 'package:music_app/providers/music_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../models/music.dart';
+import '../providers/ranking_provider.dart';
 
 class RankingPage extends StatelessWidget {
+  bool initial = true;
   @override
   Widget build(BuildContext context) {
-    List<Music> arr = [
-      Music(
-          name: "Nhìn về phía em",
-          singer: "Đình Dũng",
-          thumbnail:
-              "https://photo-resize-zmp3.zmdcdn.me/w94_r1x1_jpeg/cover/2/2/7/5/2275dda526935755fc51b587e08e1d7e.jpg",
-          url: "123")
-    ];
+    if (initial) {
+      context.read<RankingProvider>().getRanking();
+      initial = false;
+    }
+    final ranking = context.watch<RankingProvider>().ranking;
     return Container(
       child: Column(children: [
         Container(
@@ -28,11 +27,13 @@ class RankingPage extends StatelessWidget {
         ),
         SingleChildScrollView(
           child: Container(
-            height: 200,
+            height: MediaQuery.of(context).size.height - 100,
             child: ListView(
-                children: arr
-                    .map((e) => RankingItem(e.thumbnail, e.singer, e.name))
-                    .toList()),
+                children: ranking != null
+                    ? ranking.vn
+                        .map((e) => RankingItem(e.thumbnail, e.singer, e.name, e.id))
+                        .toList()
+                    : [Container()]),
           ),
         )
       ]),
@@ -43,29 +44,33 @@ class RankingPage extends StatelessWidget {
 class RankingItem extends StatelessWidget {
   final String thumbnail;
   final String singer;
-  final String music;
-  RankingItem(this.thumbnail, this.singer, this.music);
+  final String name;
+  final String id;
+  RankingItem(this.thumbnail, this.singer, this.name, this.id);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(children: [
-        Image.network(
-          this.thumbnail,
-          height: 50,
-          width: 50,
-        ),
-        Expanded(
-            child: ListTile(
-          title: Text(
-            this.music,
-            style: TextStyle(color: Colors.white),
+    return InkWell(
+      onTap: () => Provider.of<MusicProvider>(context, listen: false).play(id, name, singer, thumbnail),
+      child: Container(
+        child: Row(children: [
+          Image.network(
+            this.thumbnail,
+            height: 50,
+            width: 50,
           ),
-          subtitle: Text(
-            this.singer,
-            style: TextStyle(color: Colors.white),
-          ),
-        ))
-      ]),
+          Expanded(
+              child: ListTile(
+            title: Text(
+              this.name,
+              style: TextStyle(color: Colors.white),
+            ),
+            subtitle: Text(
+              this.singer,
+              style: TextStyle(color: Colors.white),
+            ),
+          ))
+        ]),
+      ),
     );
   }
 }

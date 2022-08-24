@@ -7,7 +7,13 @@ class Ranking {
   Ranking(this.korea, this.us, this.vn);
 
   Ranking.fromJson(Map<String, dynamic> json)
-      : korea = json['korea'].map((e) => Music.fromJson(e)).toList(),
-        us = json['us'].map((e) => Music.fromJson(e)).toList(),
-        vn = json['vn'].map((e) => Music.fromJson(e)).toList();
+      : korea = (json['korea'] as List<dynamic>)
+            .map((e) => Music.fromJson(e))
+            .toList(),
+        us = (json['us'] as List<dynamic>)
+            .map((e) => Music.fromJson(e))
+            .toList(),
+        vn = (json['vn'] as List<dynamic>)
+            .map((e) => Music.fromJson(e))
+            .toList();
 }

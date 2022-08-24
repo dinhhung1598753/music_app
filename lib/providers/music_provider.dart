@@ -18,6 +18,7 @@ class MusicProvider extends ChangeNotifier {
   String currentSong = "";
 
   Music? _music = Music(
+      id: '123',
       name: 'Bên trên tầng lầu',
       singer: 'Tăng Duy tân',
       thumbnail:
@@ -63,6 +64,13 @@ class MusicProvider extends ChangeNotifier {
     btnIcon = Icons.pause;
     isPlaying = true;
     notifyListeners();
+  }
+
+  void play(String id, String name, String singer, String thumbnail) async {
+    final url = await getStreaming(id);
+    _music = Music(
+        id: id, name: name, singer: singer, thumbnail: thumbnail, url: url);
+    playMusic();
   }
 
   Music? get music => _music;

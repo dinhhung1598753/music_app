@@ -7,6 +7,7 @@ import 'package:music_app/screens/home.dart';
 import 'package:provider/provider.dart';
 
 import 'components/custom_bottom_navigation_bar.dart';
+import 'providers/ranking_provider.dart';
 
 void main() {
   runApp(MultiProvider(
@@ -14,6 +15,7 @@ void main() {
       ChangeNotifierProvider(create: (_) => AppProvider()),
       ChangeNotifierProvider(create: (_) => HomeProvider()),
       ChangeNotifierProvider(create: (_) => MusicProvider()),
+      ChangeNotifierProvider(create: (_) => RankingProvider()),
     ],
     child: const MyApp(),
   ));

@@ -10,7 +10,7 @@ void showModalBottom(BuildContext context) {
       ),
       builder: (context) => Container(
           // padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-          height: MediaQuery.of(context).size.height - 40,
+          // height: MediaQuery.of(context).size.height - 40,
           decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,

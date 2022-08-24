@@ -50,15 +50,6 @@ class MusicComponent extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.1),
-                                    borderRadius: BorderRadius.circular(50.0)),
-                                child: Icon(
-                                  Icons.arrow_drop_down,
-                                  color: Colors.white,
-                                ),
-                              ),
                               Column(
                                 children: [
                                   // Text(
@@ -70,10 +61,6 @@ class MusicComponent extends StatelessWidget {
                                   //     style: TextStyle(color: Colors.white)),
                                 ],
                               ),
-                              Icon(
-                                Icons.playlist_add,
-                                color: Colors.white,
-                              )
                             ],
                           ),
                           Spacer(),

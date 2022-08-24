@@ -32,7 +32,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
                         CircleAvatar(
                           radius: 22.0,
                           backgroundImage: NetworkImage(
-                              "http://vnnews24h.net/img_data/images/day-cho-con-lam-quen-khi-ve-nha-moi.jpg"),
+                              context.watch<MusicProvider>().music!.thumbnail),
                           backgroundColor: Colors.transparent,
                         ),
                         Expanded(
