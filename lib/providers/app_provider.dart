@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:music_app/screens/setting.dart';
 
 import '../screens/home.dart';
 import '../screens/ranking.dart';
 
-List<Widget> screens = [HomePage(), RankingPage()];
+List<Widget> screens = [HomePage(), RankingPage(), Container(), SettingPage()];
 
 class AppProvider extends ChangeNotifier {
   int _indexPage = 0;

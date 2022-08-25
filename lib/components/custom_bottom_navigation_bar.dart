@@ -88,8 +88,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
                       activeIndex: 0,
                     ),
                     CustomBottomNavigationBarItem(
-                      text: 'Navigator',
-                      icon: FontAwesomeIcons.solidCompass,
+                      text: 'Ranking',
+                      icon: FontAwesomeIcons.rankingStar,
                       activeIndex: 1,
                     ),
                     CustomBottomNavigationBarItem(

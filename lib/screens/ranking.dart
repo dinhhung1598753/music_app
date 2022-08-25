@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:music_app/components/custom_bottom_navigation_bar.dart';
-import 'package:music_app/providers/home_provider.dart';
 import 'package:music_app/providers/music_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../models/music.dart';
 import '../providers/ranking_provider.dart';
+
+const listTitle = ["#VietNam-Ranking", "#US-UK-RANKING", "#KOREA-RANKING"];
 
 class RankingPage extends StatelessWidget {
   bool initial = true;
@@ -16,24 +15,110 @@ class RankingPage extends StatelessWidget {
       context.read<RankingProvider>().getRanking();
       initial = false;
     }
-    final ranking = context.watch<RankingProvider>().ranking;
+    final playlist = context.watch<RankingProvider>().playlist;
+
+    final index = context.watch<RankingProvider>().index;
+
+    BorderSide getBorderSide(int _index) {
+      return _index == index
+          ? BorderSide(color: Colors.amberAccent, width: 3)
+          : BorderSide(color: Colors.grey, width: 1);
+    }
+
+    final title = listTitle[index];
+
     return Container(
       child: Column(children: [
         Container(
-          child: Text('US-UK'),
-          color: Colors.red,
-          height: 100,
+          padding: EdgeInsets.only(left: 15, right: 15, bottom: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                // padding: EdgeInsets.only(left: 10),
+                child: Text(
+                  title,
+                  style: TextStyle(
+                      color: Colors.amber,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              Padding(padding: EdgeInsets.all(10)),
+              Row(
+                children: [
+                  Expanded(
+                      child: InkWell(
+                    onTap: () =>
+                        Provider.of<RankingProvider>(context, listen: false)
+                            .setIndex(0),
+                    child: Container(
+                        decoration: BoxDecoration(
+                            border: Border(bottom: getBorderSide(0))),
+                        padding: EdgeInsets.all(5),
+                        child: Center(
+                            child: Text(
+                          'V-pop',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16),
+                        ))),
+                  )),
+                  Expanded(
+                      child: InkWell(
+                    onTap: () =>
+                        Provider.of<RankingProvider>(context, listen: false)
+                            .setIndex(1),
+                    child: Container(
+                        decoration: BoxDecoration(
+                            border: Border(bottom: getBorderSide(1))),
+                        padding: EdgeInsets.all(5),
+                        child: Center(
+                            child: Text(
+                          'US-UK',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16),
+                        ))),
+                  )),
+                  Expanded(
+                      child: InkWell(
+                    onTap: () =>
+                        Provider.of<RankingProvider>(context, listen: false)
+                            .setIndex(2),
+                    child: Container(
+                        decoration: BoxDecoration(
+                            border: Border(bottom: getBorderSide(2))),
+                        padding: EdgeInsets.all(5),
+                        child: Center(
+                            child: Text(
+                          'K-pop',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16),
+                        ))),
+                  )),
+                ],
+              ),
+            ],
+          ),
+          color: Colors.black,
+          height: 110,
           width: MediaQuery.of(context).size.width,
         ),
         SingleChildScrollView(
           child: Container(
+            padding: EdgeInsets.only(left: 10, right: 10, bottom: 100),
             height: MediaQuery.of(context).size.height - 100,
             child: ListView(
-                children: ranking != null
-                    ? ranking.vn
-                        .map((e) => RankingItem(e.thumbnail, e.singer, e.name, e.id))
-                        .toList()
-                    : [Container()]),
+                children: playlist
+                    .map(
+                        (e) => RankingItem(e.thumbnail, e.singer, e.name, e.id))
+                    .toList()),
           ),
         )
       ]),
@@ -50,7 +135,8 @@ class RankingItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Provider.of<MusicProvider>(context, listen: false).play(id, name, singer, thumbnail),
+      onTap: () => Provider.of<MusicProvider>(context, listen: false)
+          .play(id, name, singer, thumbnail),
       child: Container(
         child: Row(children: [
           Image.network(

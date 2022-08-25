@@ -31,17 +31,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(
-          backgroundColor: Colors.black,
-          body: Stack(
-            children: [
-              context.watch<AppProvider>().screen,
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: CustomBottomNavigationBar(),
-              )
-            ],
-          )),
+      home: SafeArea(
+        child: Scaffold(
+            backgroundColor: Colors.black,
+            body: Stack(
+              children: [
+                context.watch<AppProvider>().screen,
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: CustomBottomNavigationBar(),
+                )
+              ],
+            )),
+      ),
     );
   }
 }

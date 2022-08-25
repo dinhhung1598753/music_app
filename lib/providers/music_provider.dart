@@ -17,14 +17,7 @@ class MusicProvider extends ChangeNotifier {
   bool isPlaying = false;
   String currentSong = "";
 
-  Music? _music = Music(
-      id: '123',
-      name: 'Bên trên tầng lầu',
-      singer: 'Tăng Duy tân',
-      thumbnail:
-          "https://photo-resize-zmp3.zmdcdn.me/w240_r1x1_jpeg/avatars/d/d/d/a/ddda5f9fec1f2ef6c499831661727263.jpg",
-      url:
-          "https://mp3-s1-zmp3.zmdcdn.me/4a736dacbbed52b30bfc/1734412333280030724?authen=exp=1661498756~acl=/4a736dacbbed52b30bfc/*~hmac=8b0a5c2f0d87e40dc3a8d93f1e0c8cfb&fs=MTY2MTMyNTk1NjI4MXx3ZWJWNnwwfDE3MS4yNDkdUngMjI0LjEyOA");
+  Music? _music = null;
   void playMusic() async {
     if (isPlaying && currentSong != _music!.url) {
       audioPlayer.pause();
